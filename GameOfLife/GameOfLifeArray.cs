@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace GameOfLife
 {
-    internal class GameOfLifeGrid
+    internal class GameOfLifeArray : IGameOfLife
     {
         bool[,] grid;
         bool[,] gridOld;
         private int cellsPerRow;
         private int pixelsPerCell;
-        public Size GridSize;
         private int[] dx;
         private int[] dy;
-        public GameOfLifeGrid()
+        public Size GridSize { get; set; }
+        public GameOfLifeArray()
         {
             cellsPerRow = 200;
             GridSize = new(800, 800);
@@ -34,7 +34,7 @@ namespace GameOfLife
             dx = [-1, 0, 1, -1, 1, -1, 0, 1 ];
             dy = [-1, -1, -1, 0, 0, 1, 1, 1 ];
         }
-        internal void DrawGrid(Graphics graphics, Brush brush)
+        public void DrawGrid(Graphics graphics, Brush brush)
         {
             for (int i = 0; i < grid.GetLength(0); i++)
             {
@@ -47,7 +47,7 @@ namespace GameOfLife
                 }
             }
         }
-        internal void UpdateGrid()
+        public void UpdateGrid()
         {
             Buffer.BlockCopy(grid, 0, gridOld, 0, grid.Length);
             grid = new bool[cellsPerRow, cellsPerRow];
@@ -71,7 +71,7 @@ namespace GameOfLife
                 }
             }
         }
-        internal int CountNeighbours(bool[,] gridOld, Point coords)
+        private int CountNeighbours(bool[,] gridOld, Point coords)
         {
             int count = 0;
             for (int i = 0; i < 8; i++)

@@ -4,26 +4,25 @@ namespace GameOfLife
 {
     public partial class Form1 : Form
     {
-        SolidBrush myBrush;
-
         System.Windows.Forms.Timer redrawTimer;
-        GameOfLifeGrid gameOfLifeGrid;
+        SolidBrush myBrush;
+        IGameOfLife gameOfLife;
 
-        public Form1()
+        public Form1(IGameOfLife gameOfLife)
         {
             InitializeComponent();
             myBrush = new SolidBrush(Color.White);
             OptimizeDrawing();
+            redrawTimer = new();
             InitializeRedrawTimer();
-            gameOfLifeGrid = new GameOfLifeGrid();
-            Size = gameOfLifeGrid.GridSize;
+            this.gameOfLife = gameOfLife;
+            Size = gameOfLife.GridSize;
         }
 
         private void InitializeRedrawTimer()
         {
-            redrawTimer = new();
             redrawTimer.Interval = 1; // ~60 FPS
-            redrawTimer.Tick += (s, e) => gameOfLifeGrid.UpdateGrid();
+            redrawTimer.Tick += (s, e) => gameOfLife.UpdateGrid();
             redrawTimer.Tick += (s, e) => Invalidate();
             redrawTimer.Start();
         }
@@ -38,7 +37,7 @@ namespace GameOfLife
         protected override void OnPaint(PaintEventArgs e)
         {
             var graphics = e.Graphics;
-            gameOfLifeGrid.DrawGrid(graphics, myBrush);
+            gameOfLife.DrawGrid(graphics, myBrush);
 
         }
     }
