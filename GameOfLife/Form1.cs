@@ -24,6 +24,14 @@ namespace GameOfLife
             redrawTimer.Interval = 1; // ~60 FPS
             redrawTimer.Tick += (s, e) => gameOfLife.UpdateGrid();
             redrawTimer.Tick += (s, e) => Invalidate();
+            redrawTimer.Tick += (s, e) => gameOfLife.UpdateGrid();
+            redrawTimer.Tick += (s, e) => Invalidate();
+            redrawTimer.Tick += (s, e) => gameOfLife.UpdateGrid();
+            redrawTimer.Tick += (s, e) => Invalidate();
+            redrawTimer.Tick += (s, e) => gameOfLife.UpdateGrid();
+            redrawTimer.Tick += (s, e) => Invalidate();
+            redrawTimer.Tick += (s, e) => gameOfLife.UpdateGrid();
+            redrawTimer.Tick += (s, e) => Invalidate();
             redrawTimer.Start();
         }
 

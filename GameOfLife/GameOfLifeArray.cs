@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameOfLife
 {
-    internal class GameOfLifeArray : IGameOfLife
+    public class GameOfLifeArray : IGameOfLife
     {
         bool[,] grid;
         bool[,] gridOld;
