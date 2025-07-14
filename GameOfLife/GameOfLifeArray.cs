@@ -13,8 +13,8 @@ namespace GameOfLife
         bool[,] gridOld;
         private int cellsPerRow;
         private int pixelsPerCell;
-        private int[] dx;
-        private int[] dy;
+        private static readonly int[] dx = [-1, 0, 1, -1, 1, -1, 0, 1];
+        private static readonly int[] dy = [-1, -1, -1, 0, 0, 1, 1, 1];
         public Size GridSize { get; set; }
         public GameOfLifeArray()
         {
@@ -30,9 +30,6 @@ namespace GameOfLife
             grid[22, 20] = true;
             grid[22, 21] = true;
             grid[21, 19] = true;
-
-            dx = [-1, 0, 1, -1, 1, -1, 0, 1 ];
-            dy = [-1, -1, -1, 0, 0, 1, 1, 1 ];
         }
         public void DrawGrid(Graphics graphics, Brush brush)
         {
@@ -50,7 +47,15 @@ namespace GameOfLife
         public void UpdateGrid()
         {
             Buffer.BlockCopy(grid, 0, gridOld, 0, grid.Length);
-            grid = new bool[cellsPerRow, cellsPerRow];
+
+            //clear grid
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    grid[i, j] = false;
+                }
+            }
 
             for (int i = 0; i < gridOld.GetLength(0); i++)
             {
